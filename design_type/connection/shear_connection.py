@@ -23,6 +23,11 @@ class ShearConnection(Connection):
         c = connectdb1()
         return c
 
+    @staticmethod
+    def cleat_section():
+        v = VALUES_ANGLESEC
+        return v
+
     def customized_input(self):
 
         list1 = []
@@ -32,6 +37,8 @@ class ShearConnection(Connection):
         list1.append(t2)
         t3 = (KEY_D, self.diam_bolt_customized)
         list1.append(t3)
+        t4 = (KEY_CLEATSEC, self.cleat_section)
+        list1.append(t4)
         return list1
 
     def fn_conn_suptngsec_lbl(self):

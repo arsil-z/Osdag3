@@ -50,12 +50,15 @@ class Ui_ModuleWindow(QMainWindow):
     def setupUi(self, MainWindow, main):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1328, 769)
+        #MainWindow.showNormal()
+        #MainWindow.showMaximized()
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/newPrefix/images/finwindow.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setIconSize(QtCore.QSize(20, 2))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.centralwidget.showMaximized()
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.frame = QtWidgets.QFrame(self.centralwidget)
@@ -195,6 +198,7 @@ class Ui_ModuleWindow(QMainWindow):
         # self.textEdit.setStyleSheet("QTextEdit {color:red}")
         self.verticalLayout_2.addWidget(self.splitter)
         MainWindow.setCentralWidget(self.centralwidget)
+        #MainWindow.resize(2328, 1569)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1328, 21))
         self.menubar.setStyleSheet("")
@@ -495,37 +499,58 @@ class Ui_ModuleWindow(QMainWindow):
                     indx = option[4].index(str(value))
                     key.setItemData(indx, QBrush(QColor("red")), Qt.TextColorRole)
 
+        temp = option_list[0]
+        print(temp)
+
         new_list = main.customized_input(main)
         data = {}
+        if temp[1] == KEY_DISP_FINPLATE:
 
-        for t in new_list:
-            if t[0] == KEY_PLATETHK:
-                key_customized_1 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
-                key_customized_1.activated.connect(lambda: popup(key_customized_1, new_list))
-                data[t[0] + "_customized"] = t[1]()
-            elif t[0] == KEY_GRD:
-                key_customized_2 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
-                key_customized_2.activated.connect(lambda: popup(key_customized_2, new_list))
-                data[t[0] + "_customized"] = t[1]()
-            elif t[0] == KEY_D:
-                key_customized_3 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
-                key_customized_3.activated.connect(lambda: popup(key_customized_3, new_list))
-                data[t[0] + "_customized"] = t[1]()
-            else:
-                pass
+            for t in new_list:
 
-        def popup(key, for_custom_list):
-            for c_tup in for_custom_list:
-                if c_tup[0] != key.objectName():
-                    continue
-                selected = key.currentText()
-                f = c_tup[1]
-                options = f()
-                existing_options = data[c_tup[0] + "_customized"]
-                if selected == "Customized":
-                    data[c_tup[0] + "_customized"] = self.open_popup(options, existing_options)
+
+                if t[0] == KEY_PLATETHK:
+                    key_customized_1 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
+                    key_customized_1.activated.connect(lambda: popup(key_customized_1, new_list))
+                    data[t[0] + "_customized"] = t[1]()
+                elif t[0] == KEY_GRD:
+                    key_customized_2 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
+                    key_customized_2.activated.connect(lambda: popup(key_customized_2, new_list))
+                    data[t[0] + "_customized"] = t[1]()
+                elif t[0] == KEY_D:
+                    key_customized_3 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
+                    key_customized_3.activated.connect(lambda: popup(key_customized_3, new_list))
+                    data[t[0] + "_customized"] = t[1]()
                 else:
-                    data[c_tup[0] + "_customized"] = f()
+                    pass
+        elif temp[1] == KEY_DISP_CLEAT_ANGLE:
+            for t in new_list:
+                if t[0] == KEY_CLEATSEC:
+                    key_customized_1 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
+                    key_customized_1.activated.connect(lambda: popup(key_customized_1, new_list))
+                    data[t[0] + "_customized"] = t[1]()
+                elif t[0] == KEY_GRD:
+                    key_customized_2 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
+                    key_customized_2.activated.connect(lambda: popup(key_customized_2, new_list))
+                    data[t[0] + "_customized"] = t[1]()
+                elif t[0] == KEY_D:
+                    key_customized_3 = self.dockWidgetContents.findChild(QtWidgets.QWidget, t[0])
+                    key_customized_3.activated.connect(lambda: popup(key_customized_3, new_list))
+                    data[t[0] + "_customized"] = t[1]()
+                else:
+                    pass
+            def popup(key, for_custom_list):
+                for c_tup in for_custom_list:
+                    if c_tup[0] != key.objectName():
+                        continue
+                    selected = key.currentText()
+                    f = c_tup[1]
+                    options = f()
+                    existing_options = data[c_tup[0] + "_customized"]
+                    if selected == "Customized":
+                        data[c_tup[0] + "_customized"] = self.open_popup(options, existing_options)
+                    else:
+                        data[c_tup[0] + "_customized"] = f()
 
         updated_list = main.input_value_changed(main)
 
@@ -1897,5 +1922,5 @@ if __name__ == '__main__':
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_ModuleWindow()
     ui.setupUi(MainWindow)
-    MainWindow.show()
+    MainWindow.showFullScreen()
     sys.exit(app.exec_())
